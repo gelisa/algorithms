@@ -12,8 +12,34 @@ def insertionSort():
 def shellSort():
     return None
 
-def mergeSort():
-    return None
+def mergeSort(alist):
+    """
+    performs a merge sort
+    :param alist: list of numbers
+    :return: sorted list of numbers
+    """
+    if alist == []:
+        return []
+    if len(alist) == 1:
+        return alist
+    else:
+        left = mergeSort(alist[0:len(alist)//2])
+        right = mergeSort(alist[len(alist)//2:])
+    mergeList = []
+    i = 0
+    j = 0
+    while ( i < len(left)) and ( j < len(right)):
+        if left[i] < right[j]:
+            mergeList.append(left[i])
+            i += 1
+        else:
+            mergeList.append(right[j])
+            j += 1
+    if i < len(left):
+        mergeList += left[i:]
+    if j < len(right):
+        mergeList += right[j:]
+    return mergeList
 
 def quickSort(alist):
     def partition(alist,first,last):
@@ -65,3 +91,18 @@ def heapSort():
 
 def timSort():
     return None
+
+inputs = [[],[1], [1,2], [3,1], [1,3,2], [2,4,6,1,3,5]]
+outputs = [[],[1],[1,2],[1,3],[1,2,3], [1,2,3,4,5,6]]
+
+def testSort(input,output,function):
+    for (i,o) in zip(inputs,outputs):
+        io = function(i)
+        if not io == o:
+            print('function failed on ',str(i))
+            print('expected return is', str(o))
+            print('but got ', str(io))
+        else:
+            print('passed')
+
+testSort(inputs,outputs,mergeSort)
