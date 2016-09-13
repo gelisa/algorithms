@@ -95,7 +95,7 @@ def timSort():
 inputs = [[],[1], [1,2], [3,1], [1,3,2], [2,4,6,1,3,5]]
 outputs = [[],[1],[1,2],[1,3],[1,2,3], [1,2,3,4,5,6]]
 
-def testSort(input,output,function):
+def testSort(inputs,outputs,function):
     for (i,o) in zip(inputs,outputs):
         io = function(i)
         if not io == o:
