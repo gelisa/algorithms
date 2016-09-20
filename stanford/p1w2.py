@@ -2,12 +2,32 @@
 
 
 
-def quickSort(a):
+def quickSort(a, pivot):
     """
 
     :param a:
     :return:
     """
+    def get_pivot(pivot, a, l, r):
+        """
+        :param pivot: can be:
+        'first'
+        'last'
+        'median'
+        :return:
+        """
+        if pivot == 'first':
+            return l
+        if pivot == 'last':
+            return r
+        if pivot == 'median':
+            three = [(a[l], l), (a[r], r), (a[(r - l) // 2], (r - l) // 2)]
+            three.sort(key=lambda x: x[0])
+            return three[1][1]
+        else:
+            raise ValueError('wrong pivot')
+
+
     def partition(l, r, p_ind):
         """
         partitioning subroutine for quick solt
@@ -28,7 +48,7 @@ def quickSort(a):
 
         return i - 1
 
-    def quickSortHelper(l, r):
+    def quickSortHelper(l, r, pivot):
         """
 
         :param l:
@@ -38,17 +58,15 @@ def quickSort(a):
         nonlocal a
         nonlocal count
         if l < r:
-            three = [(a[l],l),(a[r],r),(a[(r-l)//2],(r-l)//2)]
-            three.sort(key=lambda x: x[0])
-            p_ind = three[1][1]
+            p_ind = get_pivot(pivot,a,l,r)
             print('pivot',p_ind, a[p_ind])
             p = partition(l, r, p_ind)
             print(count,'->',count+r-l)
             count += r - l
-            quickSortHelper(l, p - 1)
+            quickSortHelper(l, p - 1, pivot)
             # if l < p - 1:
             #     count += p - l
-            quickSortHelper(p + 1, r)
+            quickSortHelper(p + 1, r, pivot)
             # if r > p + 1:
             #     count += r - p
 
@@ -56,7 +74,7 @@ def quickSort(a):
     if len(a) <=1:
         return None
     count = 0
-    quickSortHelper(0,len(a)-1)
+    quickSortHelper(0,len(a)-1, pivot)
     print(count)
 
 inputs = [[],[1], [1,2], [3,1], [1,6,7,5,3,2,4], [2,4,6,1,3,5]]
@@ -73,13 +91,14 @@ def testSort(inputs,outputs,function):
             print('passed')
 
 
-def loadData():
+def loadData(filename):
     nums = []
-    f = open('p1w2.txt','r')
+    f = open(filename,'r')
     for line in f:
         nums.append(int(line.rstrip('\n')))
+    print(nums)
     return nums
 
-testSort(inputs,outputs,quickSort)
+#testSort(inputs,outputs,quickSort)
 
-# quickSort(loadData())
+quickSort(loadData('p1w2_10.txt'),'median')
