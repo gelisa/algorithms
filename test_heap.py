@@ -31,7 +31,6 @@ class Init_Test(unittest.TestCase):
         self.assertEqual(bh.size, len(alist))
 
 
-
 if __name__ == '__main__':
     unittest.main()
 

@@ -42,6 +42,7 @@ class Bin_Heap:
 
     def min(self):
         minimum = self.items[1]
+        self.items[1] = self.items.pop()
         self.size -= 1
         self.perc_down(1)
         return minimum
