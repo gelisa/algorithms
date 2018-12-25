@@ -20,7 +20,6 @@ class Bin_Heap:
             logger.debug('init_from_list in while {}'.format(idx))
             self.perc_down(idx)
             idx -= 1
-        #return items
 
     def perc_up(self, cidx: int):
         while self.items[cidx] < self.items[cidx // 2]:
@@ -52,6 +51,3 @@ class Bin_Heap:
             return 2 * i
         else:
             return 2 * i + 1
-
-
-bh = Bin_Heap()
