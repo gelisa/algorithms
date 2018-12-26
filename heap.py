@@ -13,32 +13,34 @@ class Bin_Heap:
 
     def init_from_list(self, alist: list):
         idx = len(alist) // 2
-        logger.debug('init_from_list {}'.format(idx))
+        logger.debug('init_from_list idx {}'.format(idx))
         self.size = len(alist)
         self.items = [0] + alist
         while idx > 0:
-            logger.debug('init_from_list in while {}'.format(idx))
+            logger.debug('init_from_list in while h[{}]={}'.format(idx, self.items[idx]))
             self.perc_down(idx)
             idx -= 1
 
     def perc_up(self, cidx: int):
-        while self.items[cidx] < self.items[cidx // 2]:
-            self.items[cidx], self.items[cidx // 2] = self.items[cidx // 2], self.items[cidx]
+        while cidx // 2 > 0:
+            if self.items[cidx] < self.items[cidx // 2]:
+             self.items[cidx], self.items[cidx // 2] = self.items[cidx // 2], self.items[cidx]
             cidx = cidx // 2
 
     def perc_down(self, cidx: int):
-        logger.debug('perc_down {}'.format(cidx, self.items[cidx]))
-        midx = self.min_child(cidx)
-        logger.debug('perc_down min child idx {}'.format(midx))
-        while self.items[cidx] > self.items[midx]:
-            self.items[cidx], self.items[midx] = self.items[midx], self.items[cidx]
-            logger.debug('perc_down in while, items {}'.format(self.items))
+        while cidx * 2 < self.size:
+            logger.debug('perc_down h[{}]={}'.format(cidx, self.items[cidx]))
+            midx = self.min_child(cidx)
+            logger.debug('perc_down min child h[{}]={}'.format(midx, self.items[midx]))
+            if self.items[cidx] > self.items[midx]:
+                self.items[cidx], self.items[midx] = self.items[midx], self.items[cidx]
+                logger.debug('perc_down in while, items {}'.format(self.items))
             cidx = midx
 
     def insert(self, item):
         self.items.append(item)
         self.size += 1
-        self.perc_up(self.size - 1)
+        self.perc_up(self.size)
 
     def min(self):
         minimum = self.items[1]
