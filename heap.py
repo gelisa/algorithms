@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger('heap')
 
+
 class Bin_Heap:
     def __init__(self, alist=[]):
         if not alist:
