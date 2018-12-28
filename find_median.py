@@ -11,17 +11,14 @@ def find_median_short(l):
     if len(l) == 1:
         return l[0]
     if len(l) == 2:
-        return max(l)
+        return (l[0] + l[1]) / 2
 
 
 def find_median(l):
     if len(l) <= 2:
         return find_median_short(l)
 
-    if len(l) % 2:
-        heap_size = len(l) // 2 + 1
-    else:
-        heap_size = len(l) // 2
+    heap_size = len(l) // 2 + 1
     bh = Bin_Heap(l[:heap_size])
     min_val = bh.min()
     for item in l[heap_size:]:
@@ -30,6 +27,11 @@ def find_median(l):
         else:
             bh.insert(item)
             min_val = bh.min()
+
+    if len(l) % 2 == 0:
+        extra_min_val = bh.min()
+        return (min_val + extra_min_val) / 2
+
     return min_val
 
 
@@ -45,7 +47,22 @@ def pivot_around(p_idx: int, l: list, left, right):
     return new_pivot
 
 
-def find_median_quick(l):  # TODO fix bugs
+def find_max(l, left, right):
+    max_val = l[left]
+    for i in range(left, right+1):
+        if l[i] > max_val:
+            max_val = l[i]
+    return max_val
+
+def find_min(l, left, right):
+    max_val = l[left]
+    for i in range(left, right+1):
+        if l[i] < max_val:
+            max_val = l[i]
+    return max_val
+
+
+def find_median_quick(l):
     if len(l) <= 2:
         return find_median_short(l)
 
@@ -53,6 +70,7 @@ def find_median_quick(l):  # TODO fix bugs
     logger.debug('median idx {}'.format(med_position))
     left = 0
     right = len(l) - 1
+    answer = None
     while left < right:
         logger.debug('left, right: {}, {}'.format(left, right))
         pivot = randint(left, right)
@@ -61,10 +79,21 @@ def find_median_quick(l):  # TODO fix bugs
         logger.debug('list afterv pivoting: {}'.format(l))
         logger.debug('new pivot {}'.format(new_pivot))
         if new_pivot == med_position:
-            return l[new_pivot]
+            answer = new_pivot
+            break
         elif new_pivot > med_position:
             right = new_pivot - 1
         else:
             left = new_pivot + 1
-    logger.debug('left, right after while: {}, {}'.format(left, right))
-    return l[left]
+    if not answer:
+        answer = left
+
+    if len(l) % 2 == 0:
+        logger.debug('even {}: l[{}] = {}'.format(l, answer, l[answer]))
+        extra_min_val = find_min(l, 0, answer - 1)
+        logger.debug('extra_value: {}'.format(extra_min_val))
+        return (l[answer] + extra_min_val) / 2
+    else:
+        logger.debug('odd: l[{}] = {}'.format(answer, l[answer]))
+
+    return l[answer]

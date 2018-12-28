@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
 
     @ddt.data(fm.find_median, fm.find_median_quick)
     def test_2(self, func):
-        self.assertEqual(1, func([0, 1]))
+        self.assertEqual(0.5, func([0, 1]))
 
     @ddt.data(fm.find_median, fm.find_median_quick)
     def test_3(self, func):
@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
 
     @ddt.data(fm.find_median, fm.find_median_quick)
     def test_4(self, func):
-        self.assertEqual(2, func([0, 1, 2, 3]))
+        self.assertEqual(1.5, func([0, 1, 2, 3]))
 
     @ddt.data(fm.find_median, fm.find_median_quick)
     def test_some_equal(self, func):
