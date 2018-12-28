@@ -5,13 +5,18 @@ from heap import Bin_Heap
 logger = logging.getLogger('find_median')
 
 
-def find_median(l):
+def find_median_short(l):
     if len(l) == 0:
         return None
     if len(l) == 1:
         return l[0]
     if len(l) == 2:
         return max(l)
+
+
+def find_median(l):
+    if len(l) <= 2:
+        return find_median_short(l)
 
     if len(l) % 2:
         heap_size = len(l) // 2 + 1
@@ -41,6 +46,9 @@ def pivot_around(p_idx: int, l: list, left, right):
 
 
 def find_median_quick(l):  # TODO fix bugs
+    if len(l) <= 2:
+        return find_median_short(l)
+
     med_position = len(l) // 2
     logger.debug('median idx {}'.format(med_position))
     left = 0
