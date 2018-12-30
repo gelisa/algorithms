@@ -18,5 +18,9 @@ def find_string_bf(string, query):
     return locations
 
 
+def boyer_moore(string, query):
+    pass
+
+
 
 
