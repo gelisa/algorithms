@@ -54,6 +54,7 @@ def find_max(l, left, right):
             max_val = l[i]
     return max_val
 
+
 def find_min(l, left, right):
     max_val = l[left]
     for i in range(left, right+1):

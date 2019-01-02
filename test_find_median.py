@@ -36,6 +36,10 @@ class Test(unittest.TestCase):
     def test_unsorted(self, func):
         self.assertEqual(3, func([1, 3, 4, 5, 2]))
 
+    @ddt.data(fm.find_median, fm.find_median_quick)
+    def test_majority(self, func):
+        self.assertEqual(1, func([1, 3, 1, 1, 1]))
+
 
 if __name__ == '__main__':
     unittest.main()
