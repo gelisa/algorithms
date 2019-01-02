@@ -50,6 +50,5 @@ class Test_Distributions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    #suite = unittest.TestLoader().loadTestsFromTestCase(Test_Bin_Search)
     unittest.main()
 
