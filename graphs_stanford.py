@@ -1,92 +1,11 @@
+# Elizaveta Guseva 2017-2019
+
 import random
 import copy
 import queue
 
 
-class UndirectedGraph(object):
-    def __init__(self, listOfEdges):
-        """
-        listOfEdges shows which nodes of the graph are connected
-        :type listOfEdges: [(node, node)], node can be a string or a number
-        """
-        self.outputEdges, self.vertices = self.makeDict(listOfEdges)
-        # self.listOfEdges = listOfEdges
-
-    def __str__(self):
-        str1 = 'vertices: ' + str(self.vertices) + '\nedges: ' + str(self.outputEdges)
-        return str1
-
-    def __repr__(self):
-        return self.__str__()
-
-    def __iter__(self):
-        return self.outputEdges.__iter__()
-
-    def keys(self):
-        return self.outputEdges.keys()
-
-    def __getitem__(self, item):
-        return self.outputEdges.__getitem__(item)
-
-    def __len__(self):
-        return self.vertices.__len__()
-
-    def makeDict(self, listOfEdges):
-        """
-        creates a dictionary representation of the graph
-        :param listOfEdges:
-        :return: fromVert: {node: [node]}
-        vertices: set of nodes
-        """
-        fromVert = {}
-        vertices = set([])
-        for pair in listOfEdges:
-            if pair[0] not in fromVert.keys():
-                fromVert[pair[0]] = [pair[1]]
-            else:
-                fromVert[pair[0]].append(pair[1])
-            if pair[1] not in fromVert.keys():
-                fromVert[pair[1]] = [pair[0]]
-            else:
-                fromVert[pair[1]].append(pair[0])
-
-            vertices.add(pair[0])
-            vertices.add(pair[1])
-
-        return fromVert, vertices
-
-    def mergeRandomPoints(self):
-        v1 = list(self.outputEdges.keys())[random.randint(0, len(self) - 1)]
-        v2 = self[v1][random.randint(0, len(self[v1]) - 1)]
-        self.outputEdges[v1].extend(self.outputEdges[v2])
-        print(v1, v2)
-        for x in self.outputEdges[v2]:
-            l = self.outputEdges[x]
-            for i in range(0, len(l)):
-                if l[i] == v2:
-                    l[i] = v1
-
-        while v1 in self.outputEdges[v1]:
-            self.outputEdges[v1].remove(v1)
-
-        del self.outputEdges[v2]
-        self.vertices.remove(v2)
-
-    def randomContraction(self):
-        while len(self.vertices) > 2:
-            self.mergeRandomPoints()
-
-        return len(self.outputEdges[list(self.vertices)[0]])
-
-    def repeatRandContr(self, n):
-        answers = []
-        for i in range(n):
-            g = copy.deepcopy(self)
-            answers.append(g.randomContraction())
-        return min(answers)
-
-
-class GraphForSearch(object):
+class Graph(object):
     def __init__(self, listOfEdges, directed=False):
         """
         self.edges: dict {vertex: [vertex]}
@@ -153,7 +72,9 @@ class GraphForSearch(object):
                 fromVert[pair[0]] = []
 
         return fromVert
-
+    
+    
+'''
     def bfs(self, s):
         """
         breadth first search
@@ -315,3 +236,6 @@ g3 = GraphForSearch(loe2)
 g4 = GraphForSearch(loe2, True)
 g5 = GraphForSearch(loe3, False)
 g6 = GraphForSearch(cc, True)
+'''
+
+
