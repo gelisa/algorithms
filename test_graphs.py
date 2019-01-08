@@ -3,7 +3,7 @@ import unittest
 import ddt
 
 
-class Test_Iint(unittest.TestCase):
+class Test_Init(unittest.TestCase):
     def setUp(self):
         self.list_of_edges_uni = [(0, 1, 0.5), (0, 2, 1), (1, 2, 1)]
         self.vertices_uni = {0, 1, 2}
