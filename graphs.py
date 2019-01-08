@@ -1,6 +1,9 @@
 # Elizaveta Guseva, 2019
 
 from collections import defaultdict
+from queue import PriorityQueue
+import copy
+import numpy as np
 
 
 class Graph(object):
@@ -52,6 +55,25 @@ class Graph(object):
 
         return edges
 
+    # algorithms
+
+    def dijkstra(self, from_vertex):
+        pq = PriorityQueue()
+        unseen = copy.copy(self.vertices)
+        distances = dict([(v, np.inf) for v in self.vertices])
+        distances[from_vertex] = 0
+        pq.put((0, from_vertex))
+        while not pq.empty():
+            head_dist, head = pq.get()
+            for neigh in self.edges[head]:
+                n_id, n_dist = neigh
+                distances[n_id] = min(distances[n_id], distances[head] + n_dist)
+                if n_id in unseen:
+                    pq.put((n_dist, n_id))
+            if head in unseen:
+                unseen.remove(head)
+
+        return distances
 
 
 
